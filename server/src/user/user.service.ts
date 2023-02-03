@@ -24,7 +24,6 @@ export class UserService {
         // @ts-ignore
         //todo: change type _id in IUser
         return user? user._doc : null;
-        return user;
     }
 
     async getAllUsers(): Promise<IUser[]> {
