@@ -1,6 +1,7 @@
 import {getAllUsers, registration} from "@/http/userAPI";
 import {GetServerSideProps} from "next";
 import {useState} from "react";
+import AuthForm from "@/components/AuthForm";
 
 
 // @ts-ignore
@@ -51,26 +52,10 @@ const Registration = () => {
     }
 
     return (
-        <>
-            <form style={{display: 'flex', flexDirection: 'column', gap: '10px', width: '300px'}}>
-                <input
-                    value={email}
-                    placeholder="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <input
-                    value={password}
-                    placeholder="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <input
-                    value={nickname}
-                    placeholder="nickname"
-                    onChange={(e) => setNickname(e.target.value)}
-                />
-                <button onClick={handleSubmit}>Send</button>
-            </form>
-        </>
+        <div className="m-auto flex w-1/2 flex-col gap-4">
+            <h1 className="bold text-2xl underline">Registration Form</h1>
+            < AuthForm/>
+        </div>
     )
 }
 

@@ -19,3 +19,4 @@ export const login = async (user: IUser): Promise<IUser> => {
     localStorage.setItem('token', data.token);
     return jwt_decode(data.token);
 }
+
