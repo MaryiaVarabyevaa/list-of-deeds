@@ -1,8 +1,9 @@
 import {useEffect, useState} from "react";
-import {SubmitHandler, useForm} from "react-hook-form";
+import {SubmitHandler, useForm, Controller} from "react-hook-form";
 import {ILogin} from "@/types/auth";
 import {IUser} from "@/types/user";
 import {registration} from "@/http/userAPI";
+import {emailValidation, nicknameValidation, passwordValidation} from "@/components/validation";
 
 const AuthForm = () => {
     const [isAuth, setIsAuth] = useState(false);
@@ -27,41 +28,56 @@ const AuthForm = () => {
             {
                 isAuth && <div className="input-wrapper flex flex-col">
                     <label htmlFor="nickname">Nickname</label>
-                    <input
-                        type="nickname"
-                        {...register('nickname', {
-                            required: 'Nickname is required',
-                        })}
+                    <Controller
+                        control={ control }
+                        name='nickname'
+                        rules={ nicknameValidation }
+                        render={({
+                                     field: {onChange, value}
+                                 }) => (
+                            <input
+                                onChange={onChange}
+                                value={value}
+                            />
+                        )}
                     />
-                    {/*{errors.nickname && <p className="text-xs italic text-red-500">{errors.email.message}</p>}*/}
+                    {errors.nickname && <p className="text-xs italic text-red-500">{errors.nickname.message}</p>}
                 </div>
             }
             <div className="input-wrapper flex flex-col">
                 <label htmlFor="email">Email</label>
-                <input
-                    type="email"
-                    {...register('email', {
-                        required: 'Email is required',
-                        pattern: {
-                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                            message: 'Invalid email address',
-                        },
-                    })}
+                <Controller
+                    control={ control }
+                    name='email'
+                    rules={ emailValidation }
+                    render={({
+                                 field: {onChange, value}
+                             }) => (
+                        <input
+                            type='email'
+                            onChange={onChange}
+                            value={value}
+                        />
+                    )}
                 />
                 {errors.email && <p className="text-xs italic text-red-500">{errors.email.message}</p>}
             </div>
 
             <div className="input-wrapper flex flex-col">
                 <label htmlFor="password">Password</label>
-                <input
-                    type="password"
-                    {...register('password', {
-                        required: 'Password is required',
-                        minLength: {
-                            value: 8,
-                            message: 'Password must be at least 8 characters',
-                        },
-                    })}
+                <Controller
+                    control={ control }
+                    name='password'
+                    rules={ passwordValidation }
+                    render={({
+                                 field: {onChange, value}
+                             }) => (
+                        <input
+                            type="password"
+                            onChange={onChange}
+                            value={value}
+                        />
+                    )}
                 />
                 {errors.password && (
                     <p className="text-xs italic text-red-500">{errors.password.message}</p>
