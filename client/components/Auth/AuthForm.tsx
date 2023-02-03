@@ -1,12 +1,13 @@
-import {useEffect, useState} from "react";
-import {SubmitHandler, useForm, Controller} from "react-hook-form";
-import {ILogin} from "@/types/auth";
+import {useState} from "react";
+import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {IUser} from "@/types/user";
-import {registration} from "@/http/userAPI";
-import {emailValidation, nicknameValidation, passwordValidation} from "@/components/validation";
+import {login, registration} from "@/http/userAPI";
+import {emailValidation, nicknameValidation, passwordValidation} from "@/components/Auth/validation";
+import Alert from "@/components/Alert";
 
 const AuthForm = () => {
     const [isAuth, setIsAuth] = useState(false);
+    const [errorText, setErrorText] = useState('');
     const { handleSubmit, control, reset, register, formState: { errors } } = useForm<IUser>({
         mode: 'onChange',
         defaultValues: {
@@ -17,14 +18,27 @@ const AuthForm = () => {
     });
 
     const onSubmit: SubmitHandler<IUser> = async (data)=> {
-        console.log(data);
-        // const newUser = await registration(data);
-        // console.log(newUser)
+        try {
+            let user = null;
+            if (!isAuth) {
+                user = await login({
+                    email: data.email,
+                    password: data.password
+                })
+            } else {
+                user = await registration(data);
+            }
+        } catch (err) {
+            // @ts-ignore
+            setErrorText(err.response.data.error)
+        }
     }
 
     return <>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
-
+            {
+                errorText.length !== 0 && <Alert errorText={errorText} />
+            }
             {
                 isAuth && <div className="input-wrapper flex flex-col">
                     <label htmlFor="nickname">Nickname</label>
@@ -92,7 +106,7 @@ const AuthForm = () => {
                 </button>
             </div>
         </form>
-        <a href='#' onClick={() => setIsAuth(!isAuth)}>{
+        <a href='@/components/Auth/AuthForm#' onClick={() => setIsAuth(!isAuth)}>{
             isAuth? "Already have an account? Sign in": "Don't have an account? Sign Up"
         }</a>
     </>
