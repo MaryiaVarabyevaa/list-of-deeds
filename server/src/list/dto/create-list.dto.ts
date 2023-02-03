@@ -1,4 +1,5 @@
 import {IsArray, IsNotEmpty, IsString} from "class-validator";
+import {User} from "../../user/schemas/user.schema";
 
 export class CreateListDto {
     @IsNotEmpty({

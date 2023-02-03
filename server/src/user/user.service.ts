@@ -26,7 +26,7 @@ export class UserService {
         return user? user._doc : null;
     }
 
-    async getAllUsers(): Promise<IUser[]> {
+    async getAllUsers(): Promise<IUser[]> | null {
         return this.userModel.find().exec();
     }
 }
