@@ -1,5 +1,4 @@
-import {IsArray, IsNotEmpty, IsString} from "class-validator";
-import {User} from "../../user/schemas/user.schema";
+import {IsBoolean, IsNotEmpty, IsString} from "class-validator";
 
 export class CreateListDto {
     @IsNotEmpty({
@@ -14,11 +13,23 @@ export class CreateListDto {
         message: 'List is a required field'
     })
     @IsString({
-        each: true,
         message: 'List items must be strings'
     })
-    @IsArray({
-        message: 'List must be a string'
+    readonly list: string;
+
+    @IsNotEmpty({
+        message: 'isDeleted is a required field'
     })
-    readonly list: string[];
+    @IsBoolean({
+        message: 'isDeleted field must be a boolean value'
+    })
+    isDeleted: boolean;
+
+    @IsNotEmpty({
+        message: 'isCompleted is a required field'
+    })
+    @IsBoolean({
+        message: 'isCompleted field must be a boolean value'
+    })
+    isCompleted: boolean;
 }
