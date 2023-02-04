@@ -12,4 +12,9 @@ export class ListService {
         const list = new this.listModel(listDto);
         return list.save();
     }
+
+    async findList(userId: string): Promise<List[]> | null {
+        const user = await this.listModel.find({userId},{__v: 0});
+        return user;
+    }
 }
