@@ -11,10 +11,10 @@ export class List {
     @Prop({ required: true })
     list: string;
 
-    @Prop({ required: true })
+    @Prop({ default: false })
     isDeleted: boolean;
 
-    @Prop({ required: true })
+    @Prop({ default: false })
     isCompleted: boolean;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name })
