@@ -106,7 +106,7 @@ const AuthForm = () => {
                 </button>
             </div>
         </form>
-        <a href='@/components/Auth/AuthForm#' onClick={() => setIsAuth(!isAuth)}>{
+        <a href='#' onClick={() => setIsAuth(!isAuth)}>{
             isAuth? "Already have an account? Sign in": "Don't have an account? Sign Up"
         }</a>
     </>
