@@ -4,6 +4,9 @@ import {addTodoAction, setTodoAction, sortTodoAction, toggleAction, updateTodoAc
 import { TiPencil } from "react-icons/ti";
 import { BsTrash } from "react-icons/bs";
 import empty from "../assets/empty.jpg";
+import {completeItem, createItem, deleteItem, getList, updateItem} from "@/http/listAPI";
+import {IList} from "@/types/list";
+import {isAwaitExpression} from "tsutils";
 
 interface ITodoList {
     task: string,
@@ -17,63 +20,80 @@ interface IListState {
 }
 
 const ToDoList = () => {
-    const dispatch = useDispatch();
-    const todoList = useSelector((state: IListState) => state.todoList);
-    const sortCriteria = useSelector((state: IListState) => state.sortCriteria);
+    const [userId, setUserId] = useState('63de13dee71302469a79b225');
+    const [list, setList] = useState<IList[]>([]);
     const [showModal, setShowModal] = useState(false);
-    const [currentTodo, setCurrentTodo] = useState(null);
+    const [currentTask, setCurrentTask] = useState<IList | null>(null);
     const [newTask, setNewTask] = useState("");
+    const [sortCriteria, setSortCriteria] = useState('All');
 
+    const getFullList = async () => {
+        const list = await getList('63de13dee71302469a79b225');
+        setList(list);
+    }
     useEffect(() => {
-        if (todoList.length > 0) {
-            localStorage.setItem("todoList", JSON.stringify(todoList));
-        }
-    }, [todoList]);
-    useEffect(() => {
-        const localTodoList = JSON.parse(localStorage.getItem("todoList") as string);
-        if (localTodoList) {
-            dispatch(setTodoAction(localTodoList));
-        }
-    }, []);
-    const handleAddTodo = (task: string) => {
+        getFullList();
+    }, [])
+
+
+    const handleAddTodo = async (task: string) => {
         if (task.trim().length === 0) {
             alert("Please enter a task");
         } else {
-            dispatch(addTodoAction({ task: task, id: Date.now() }));
+            const newItem = await createItem(userId, task);
+            setList([...list, newItem]);
             setNewTask("");
-            setShowModal(true);
-        }
-    };
-
-    const handleUpdateToDoList = (id: number, task: string) => {
-        if (task.trim().length === 0) {
-            alert("Please enter a task");
-        } else {
-            dispatch(updateTodoAction({ task: task, id: String(id) }));
             setShowModal(false);
         }
     };
 
-    const handleDeleteToDo = (id: string) => {
-        const updatedToDoList = todoList.filter((todo) => todo.id != id);
-        dispatch(setTodoAction(updatedToDoList));
-        localStorage.setItem("todoList", JSON.stringify(updatedToDoList));
+    const handleUpdateToDoList = async (id: string, task: string) => {
+        if (task.trim().length === 0) {
+            alert("Please enter a task");
+        } else {
+            let item = list.find((item) => item._id == id );
+            if (item) {
+                const oldList = list.filter((item) => item._id !== id );
+                item.list = task;
+                setList([...oldList, item]);
+                const newItem = await updateItem(id, task);
+                setShowModal(false);
+            }
+        }
     };
 
-    function handleSort(sortCriteria: string) {
-        dispatch(sortTodoAction(sortCriteria));
+
+
+    const handleDeleteToDo = async (id: string) => {
+        const updatedToDoList = list.filter((todo) => todo._id != id);
+        const deletedItem = await deleteItem(id);
+        setList(updatedToDoList)
+    };
+
+    const handleSort = (sortCriteria: string) => {
+        setSortCriteria(sortCriteria);
     }
 
-    const sortToDoList = todoList.filter((todo) => {
+
+    const sortToDoList = list.filter((todo) => {
         if (sortCriteria === "All") return true;
-        if (sortCriteria === "Completed" && todo.completed) return true;
-        if (sortCriteria === "Not Completed" && !todo.completed) return true;
+        if (sortCriteria === "Completed" && todo.isCompleted) return true;
+        if (sortCriteria === "Not Completed" && !todo.isCompleted) return true;
         return false;
     });
 
-    const handleToggleCompleted = (id: number) => {
-        dispatch(toggleAction({ taskId: id }));
+    const handleToggleCompleted = async (id: string) => {
+        let item = list.find((item) => item._id == id );
+        if (item) {
+            const oldList = list.filter((item) => item._id !== id );
+            item.isCompleted = !item.isCompleted;
+            setList([...oldList, item]);
+            const completeTask = await completeItem(id, item.isCompleted );
+        }
+
     };
+
+    console.log(list);
 
     return (
         <div>
@@ -85,17 +105,16 @@ const ToDoList = () => {
                             value={newTask}
                             onChange={(e) => setNewTask(e.target.value)}
                             placeholder={
-                                currentTodo ? "Update your task here" : "Enter your task here"
+                                currentTask ? "Update your task here" : "Enter your task here"
                             }
                         />
                         <div className="flex justify-between">
-                            {currentTodo ? (
+                            {currentTask ? (
                                 <>
                                     <button
                                         onClick={() => {
                                             setShowModal(false);
-                                            // @ts-ignore
-                                            handleUpdateToDoList(currentTodo.id, newTask);
+                                            handleUpdateToDoList(currentTask._id, newTask);
                                         }}
                                         className="bg-sunsetOrange text-white py-3 px-10 rounded-md"
                                     >
@@ -133,7 +152,7 @@ const ToDoList = () => {
             )}
 
             <div className=" flex items-center justify-center flex-col">
-                {todoList.length === 0 ? (
+                {list.length === 0 ? (
                     <div className="mb-6">
                         <div className="sm:w-[500px] sm:h-[500px] min-w-[250px] min-[250px]">
                             <img src={empty.src} alt="" />
@@ -163,37 +182,35 @@ const ToDoList = () => {
                         <div>
                             {sortToDoList.map((todo) => (
                                 <div
-                                    key={todo.id}
+                                    key={todo._id}
                                     className="flex items-center justify-between mb-6 bg-Tangaroa mx-auto w-full md:w-[75%] rounded-md p-4"
                                 >
                                     <div
                                         className={`${
-                                            todo.completed
+                                            todo.isCompleted
                                                 ? "line-through text-greenTeal"
                                                 : "text-sunsetOrange"
                                         }`}
                                         onClick={() => {
-                                            // @ts-ignore
-                                            handleToggleCompleted(todo.id);
+                                            handleToggleCompleted(todo._id);
                                         }}
                                     >
-                                        {todo.task}
+                                        {todo.list}
                                     </div>
                                     <div>
                                         <button
                                             className="bg-blue-500 text-white p-1 rounded-md ml-2"
                                             onClick={() => {
                                                 setShowModal(true);
-                                                // @ts-ignore
-                                                setCurrentTodo(todo);
-                                                setNewTask(todo.task);
+                                                setCurrentTask(todo);
+                                                setNewTask(todo.list);
                                             }}
                                         >
                                             <TiPencil />
                                         </button>
                                         <button
                                             className="bg-sunsetOrange text-white p-1 rounded-md ml-2"
-                                            onClick={() => handleDeleteToDo(todo.id)}
+                                            onClick={() => handleDeleteToDo(todo._id)}
                                         >
                                             <BsTrash />
                                         </button>
