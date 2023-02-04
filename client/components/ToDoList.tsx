@@ -5,9 +5,7 @@ import empty from "../assets/empty.jpg";
 import {completeItem, createItem, deleteItem, getList, updateItem} from "@/http/listAPI";
 import {IList} from "@/types/list";
 import Input from "@/components/Input";
-import {useSelector} from "react-redux";
-import {IUserState} from "@/types/user";
-
+import FriendsList from "@/components/FriendsList";
 
 
 const ToDoList = () => {
@@ -15,8 +13,9 @@ const ToDoList = () => {
     const [showModal, setShowModal] = useState(false);
     const [currentTask, setCurrentTask] = useState<IList | null>(null);
     const [newTask, setNewTask] = useState("");
-    const userId= useSelector((state: IUserState) => state.userId);
-
+    // const userId= useSelector((state: IUserState) => state.userId);
+    const userId = localStorage.getItem('userId') as string;
+    const [openFriendsView, setOpenFriendsView] = useState(false);
     const getFullList = async () => {
         const list = await getList(userId);
         setList(list);
@@ -188,6 +187,20 @@ const ToDoList = () => {
                 >
                     Add Task
                 </button>
+                {
+                    list.length !== 0 && <button
+                        className="bg-sunsetOrange text-center text-white py-3 px-10 rounded-md"
+                        onClick={() => {
+                            setOpenFriendsView(!openFriendsView)
+                        }}
+                    >
+                        View Friends
+                    </button>
+                }
+                {
+                    openFriendsView && <FriendsList />
+                }
+
             </div>
         </div>
     )
