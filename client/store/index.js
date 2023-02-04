@@ -1,7 +1,6 @@
-import { createStore } from 'redux'
+import {createStore} from 'redux'
 import {composeWithDevTools} from 'redux-devtools-extension';
-import {listReducer} from "./listStore";
+import {userReducer} from "@/store/userStore";
 
 
-
-export const store = createStore(listReducer, composeWithDevTools())
+export const store = createStore(userReducer, composeWithDevTools())

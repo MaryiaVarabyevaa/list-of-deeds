@@ -1,31 +1,11 @@
-
-interface ITodoList {
-    task: string,
-    id: string,
-    completed: boolean
-}
-
-interface IListState {
-    todoList: ITodoList[],
-    sortCriteria: string;
-}
-interface IAction {
-    type: string;
-    payload?: any;
-}
+import { IListState, ListActionTypes } from "@/types/list";
+import {IAction} from "@/types/action";
 
 const initialState: IListState = {
     todoList: [],
     sortCriteria: "All",
 };
 
-export enum ListActionTypes {
-    SET_TODO_LIST= 'SET_TODO_LIST',
-    ADD_TODO='ADD_TODO',
-    SORT_TODO = 'SORT_TODO',
-    UPDATE_TODO = 'UPDATE_TODO',
-    TOGGLE_COMPLETED = 'TOGGLE_COMPLETED'
-}
 
 export const listReducer = (state = initialState, action: IAction): IListState => {
 

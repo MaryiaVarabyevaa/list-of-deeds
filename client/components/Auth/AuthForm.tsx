@@ -1,13 +1,20 @@
 import {useState} from "react";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {IUser} from "@/types/user";
-import {login, registration} from "@/http/userAPI";
+import {findUser, login, registration} from "@/http/userAPI";
 import {emailValidation, nicknameValidation, passwordValidation} from "@/components/Auth/validation";
 import Alert from "@/components/Alert";
+import Input from "@/components/Input";
+import {useDispatch} from "react-redux";
+import {addUserAction} from "@/store/userStore";
+import Link from "next/link";
+import {useRouter} from "next/router";
 
 const AuthForm = () => {
     const [isAuth, setIsAuth] = useState(false);
     const [errorText, setErrorText] = useState('');
+    const dispatch = useDispatch();
+    const router = useRouter()
     const { handleSubmit, control, reset, register, formState: { errors } } = useForm<IUser>({
         mode: 'onChange',
         defaultValues: {
@@ -19,17 +26,21 @@ const AuthForm = () => {
 
     const onSubmit: SubmitHandler<IUser> = async (data)=> {
         try {
-            let user = null;
+            let user: any = null;
+            let isNewUser = false;
             if (!isAuth) {
                 user = await login({
                     email: data.email,
                     password: data.password
                 })
+                user = await findUser(data.email);
             } else {
                 user = await registration(data);
+                isNewUser = true;
             }
-        } catch (err) {
-            // @ts-ignore
+            router.push('/main');
+            dispatch(addUserAction({userId: isAuth? user.sub : user._id , isNewUser}))
+        } catch (err: any) {
             setErrorText(err.response.data.error)
         }
     }
@@ -49,10 +60,11 @@ const AuthForm = () => {
                         render={({
                                      field: {onChange, value}
                                  }) => (
-                            <input
-                                onChange={onChange}
-                                value={value}
-                            />
+                            // <input
+                            //     onChange={onChange}
+                            //     value={value}
+                            // />
+                            <Input value={value} onChange={onChange} placeholder={'Enter your nickname'} margin={2}/>
                         )}
                     />
                     {errors.nickname && <p className="text-xs italic text-red-500">{errors.nickname.message}</p>}
@@ -67,11 +79,12 @@ const AuthForm = () => {
                     render={({
                                  field: {onChange, value}
                              }) => (
-                        <input
-                            type='email'
-                            onChange={onChange}
-                            value={value}
-                        />
+                        // <input
+                        //     type='email'
+                        //     onChange={onChange}
+                        //     value={value}
+                        // />
+                        <Input value={value} onChange={onChange} placeholder={'Enter your email'} margin={2}/>
                     )}
                 />
                 {errors.email && <p className="text-xs italic text-red-500">{errors.email.message}</p>}
@@ -86,10 +99,17 @@ const AuthForm = () => {
                     render={({
                                  field: {onChange, value}
                              }) => (
-                        <input
-                            type="password"
-                            onChange={onChange}
+                        // <input
+                        //     type="password"
+                        //     onChange={onChange}
+                        //     value={value}
+                        // />
+                        <Input
                             value={value}
+                            onChange={onChange}
+                            placeholder={'Enter your password'}
+                            margin={2}
+                            type="password"
                         />
                     )}
                 />
@@ -100,7 +120,7 @@ const AuthForm = () => {
             <div className="input-wrapper">
                 <button
                     type="submit"
-                    className="focus:shadow-outline rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700 focus:outline-none"
+                    className="bg-sunsetOrange text-white py-3 px-10 rounded-md"
                 >
                     Submit
                 </button>

@@ -1,23 +1,11 @@
-import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {addTodoAction, setTodoAction, sortTodoAction, toggleAction, updateTodoAction} from "@/store/listStore";
-import { TiPencil } from "react-icons/ti";
-import { BsTrash } from "react-icons/bs";
+import {TiPencil} from "react-icons/ti";
+import {BsTrash} from "react-icons/bs";
 import empty from "../assets/empty.jpg";
 import {completeItem, createItem, deleteItem, getList, updateItem} from "@/http/listAPI";
 import {IList} from "@/types/list";
-import {isAwaitExpression} from "tsutils";
+import Input from "@/components/Input";
 
-interface ITodoList {
-    task: string,
-    id: string,
-    completed: boolean
-}
-
-interface IListState {
-    todoList: ITodoList[],
-    sortCriteria: string;
-}
 
 const ToDoList = () => {
     const [userId, setUserId] = useState('63de13dee71302469a79b225');
@@ -93,20 +81,28 @@ const ToDoList = () => {
 
     };
 
-    console.log(list);
+    const handleChange = (e: any) => {
+        setNewTask(e.target.value)
+    }
 
     return (
         <div>
             {showModal && (
                 <div className="fixed w-full left-0 top-0 h-full bg-transparentBlack flex items-center justify-center">
                     <div className="bg-white p-8 rounded-md">
-                        <input
-                            className="border p-2 rounded-md outline-none mb-8"
+                        {/*<input*/}
+                        {/*    className="border p-2 rounded-md outline-none mb-8"*/}
+                        {/*    value={newTask}*/}
+                        {/*    onChange={(e) => setNewTask(e.target.value)}*/}
+                        {/*    placeholder={*/}
+                        {/*        currentTask ? "Update your task here" : "Enter your task here"*/}
+                        {/*    }*/}
+                        {/*/>*/}
+                        <Input
                             value={newTask}
-                            onChange={(e) => setNewTask(e.target.value)}
-                            placeholder={
-                                currentTask ? "Update your task here" : "Enter your task here"
-                            }
+                            onChange={handleChange}
+                            placeholder={currentTask ? "Update your task here" : "Enter your task here"}
+                            margin={8}
                         />
                         <div className="flex justify-between">
                             {currentTask ? (
