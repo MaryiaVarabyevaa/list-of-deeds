@@ -3,24 +3,15 @@ import mongoose, {Document} from 'mongoose';
 import {User} from "../../user/schemas/user.schema";
 import {Type} from "class-transformer";
 
-export type ListDocument = List & Document;
+export type FriendsDocument = Friends & Document;
 
 @Schema()
-export class List {
-
-    @Prop({ required: true })
-    list: string;
-
-    @Prop({ default: false })
-    isDeleted: boolean;
-
-    @Prop({ default: false })
-    isCompleted: boolean;
+export class Friends {
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name })
     @Type(() => User)
-    userId: User;
+    userId: User[];
 }
 
-export const ListSchema = SchemaFactory.createForClass(List);
+export const FriendsSchema = SchemaFactory.createForClass(Friends);
 
