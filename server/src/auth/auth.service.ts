@@ -77,6 +77,7 @@ export class AuthService {
         });
 
         const token = await this.login(newUser.email, newUser._id);
+        console.log(token);
         return token;
     }
 }

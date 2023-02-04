@@ -1,7 +1,7 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import {User, UserSchema} from "../../user/schemas/user.schema";
-import {Transform, Type} from "class-transformer";
+import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
+import mongoose, {Document} from 'mongoose';
+import {User} from "../../user/schemas/user.schema";
+import {Type} from "class-transformer";
 
 export type ListDocument = List & Document;
 
@@ -12,10 +12,7 @@ export class List {
     list: string[];
 
 
-    @Prop({
-        type: UserSchema,
-        required: true
-    })
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name })
     @Type(() => User)
     userId: User;
 }

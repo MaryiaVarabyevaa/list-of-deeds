@@ -2,8 +2,6 @@ import {Injectable} from '@nestjs/common';
 import {InjectModel} from "@nestjs/mongoose";
 import {Model} from "mongoose";
 import {List, ListDocument} from "./schemas/list.schema";
-import {CreateUserDto} from "../user/dto/create-user.dto";
-import {IUser} from "../user/types/user";
 import {CreateListDto} from "./dto/create-list.dto";
 
 @Injectable()
