@@ -19,7 +19,7 @@ export class ListService {
     }
 
     async findList(userId: string): Promise<List[]> | null {
-        const user = await this.listModel.find({userId},{__v: 0});
+        const user = await this.listModel.find({$and : [{userId}, {isDeleted: false}]},{__v: 0});
 
         if (!user) {
             throw new HttpException(
@@ -50,7 +50,7 @@ export class ListService {
         return updatedList;
     }
 
-    async update(_id: string, list: string, isCompleted: boolean): Promise<List> {
+    async update(_id: string, list: string): Promise<List> {
         const hasItem = await this.findOne(_id);
         if (!hasItem) {
             throw new HttpException(
@@ -62,7 +62,23 @@ export class ListService {
             );
         }
 
-        const updatedList = this.listModel.findByIdAndUpdate({ _id }, { list, isCompleted });
+        const updatedList = this.listModel.findByIdAndUpdate({ _id }, { list });
+        return updatedList;
+    }
+
+    async completeTask(_id: string, isCompleted: boolean): Promise<List> {
+        const hasItem = await this.findOne(_id);
+        if (!hasItem) {
+            throw new HttpException(
+                {
+                    status: HttpStatus.OK,
+                    error: 'There is no such case on the list',
+                },
+                HttpStatus.OK,
+            );
+        }
+
+        const updatedList = this.listModel.findByIdAndUpdate({ _id }, { isCompleted: isCompleted });
         return updatedList;
     }
 }

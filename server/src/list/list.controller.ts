@@ -25,6 +25,11 @@ export class ListController {
 
     @Post('update')
     async update(@Request() req): Promise<List> {
-        return this.listService.update(req.body.id, req.body.list, req.body.isCompleted);
+        return this.listService.update(req.body.id, req.body.list);
+    }
+
+    @Post('complete')
+    async complete(@Request() req): Promise<List> {
+        return this.listService.completeTask(req.body.id, req.body.isCompleted);
     }
 }
