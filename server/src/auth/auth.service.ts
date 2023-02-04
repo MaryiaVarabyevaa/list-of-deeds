@@ -17,7 +17,7 @@ export class AuthService {
             throw new HttpException(
                 {
                     status: HttpStatus.UNAUTHORIZED,
-                    error: 'User with this email does not exist',
+                    error: 'Invalid email or password',
                 },
                 HttpStatus.UNAUTHORIZED,
             );
@@ -41,8 +41,8 @@ export class AuthService {
         return null;
     }
 
-    async login(email: string, sub: string) {
-        const payload = { email, sub};
+    async login(user: any) {
+        const payload = { email: user.email, sub: user.id };
         return {
             token: this.jwtService.sign(payload),
         };
@@ -54,7 +54,10 @@ export class AuthService {
         if (checkedUser) {
             let comparedPassword = bcrypt.compareSync(password, checkedUser.password);
             if (comparedPassword) {
-                const token = await this.login(checkedUser.email, checkedUser._id);
+                const token = await this.login({
+                    email: checkedUser.email,
+                    id:checkedUser._id
+                });
                 return token;
             }
         }
@@ -76,8 +79,10 @@ export class AuthService {
             password: hashPassword
         });
 
-        const token = await this.login(newUser.email, newUser._id);
-        console.log(token);
+        const token = await this.login({
+            email: newUser.email,
+            id: newUser._id
+        });
         return token;
     }
 }

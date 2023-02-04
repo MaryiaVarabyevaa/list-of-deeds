@@ -3,6 +3,7 @@ import {MongooseModule} from "@nestjs/mongoose";
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ListModule } from './list/list.module';
+import { FriendsModule } from './friends/friends.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { ListModule } from './list/list.module';
       UserModule,
       AuthModule,
       ListModule,
+      FriendsModule,
   ],
 
 })

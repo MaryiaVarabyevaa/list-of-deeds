@@ -32,7 +32,12 @@ export class UserController {
     @UseGuards(LocalAuthGuard)
     @Post('login')
     async login(@Request() req): Promise<{token: string}> {
-        return this.authService.login(req.user.email, req.user._id);
+        return this.authService.login(req.user);
+    }
+
+    @Post('find')
+    async findUser(@Request() req): Promise<IUser> {
+        return this.userService.findUser(req.body.email);
     }
 
     @Get()
