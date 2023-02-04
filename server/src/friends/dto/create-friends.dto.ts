@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsString} from "class-validator";
+import {IsArray, IsNotEmpty, IsString} from "class-validator";
 
 export class CreateFriendsDto {
 
@@ -9,4 +9,12 @@ export class CreateFriendsDto {
         message: 'UserId must be a string'
     })
     userId: string;
+
+    @IsNotEmpty({
+        message: 'FriendId field is a required field'
+    })
+    @IsString({
+        message: 'FriendId field must be a string'
+    })
+    friendId: string;
 }

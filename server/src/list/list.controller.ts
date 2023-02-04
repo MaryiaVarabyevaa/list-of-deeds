@@ -14,7 +14,7 @@ export class ListController {
     }
 
     @Post('find')
-    async find(@Request() req): Promise<List[]> | null{
+    async find(@Request() req): Promise<List[]> | null {
         return this.listService.findList(req.body.userId);
     }
 
