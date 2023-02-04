@@ -1,6 +1,5 @@
 import ToDoList from "@/components/ToDoList";
 import Heading from "@/components/Heding";
-import FriendsList from "@/components/FriendsList";
 
 const Main = () => {
     return (

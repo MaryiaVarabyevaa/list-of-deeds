@@ -1,7 +1,6 @@
 import jwt_decode from 'jwt-decode';
 import axios from "axios";
 import {IAllUserInfo, IUser} from "@/types/user";
-import {$host} from "@/http/service";
 import {IAuth, ILogin} from "@/types/auth";
 
 export const getAllUsers = async (): Promise<IAllUserInfo[]> => {
@@ -23,5 +22,10 @@ export const login = async (user: ILogin): Promise<IAuth> => {
 
 export const findUser = async (email:string): Promise<IAllUserInfo> => {
     const { data } = await axios.post('http://localhost:5000/user/find', { email });
+    return data;
+}
+
+export const checkUserByNickname = async (nickname: string): Promise<IAllUserInfo> => {
+    const { data } = await axios.post('http://localhost:5000/user/check-by-nickname', { nickname });
     return data;
 }

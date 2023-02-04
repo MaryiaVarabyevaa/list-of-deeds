@@ -7,7 +7,8 @@ import {IList} from "@/types/list";
 import Input from "@/components/Input";
 import FriendsList from "@/components/FriendsList";
 import {useSelector} from "react-redux";
-import {IUserState} from "@/types/user";
+import {IAllUserInfo, IUserState} from "@/types/user";
+import {getAllUsers} from "@/http/userAPI";
 
 
 const ToDoList = () => {
@@ -17,11 +18,14 @@ const ToDoList = () => {
     const [newTask, setNewTask] = useState("");
     const userId= useSelector((state: IUserState) => state.userId);
     const [openFriendsView, setOpenFriendsView] = useState(false);
+    const [users, setUsers] = useState<IAllUserInfo[]>([]);
 
     const getFullList = async () => {
         const list = await getList(userId);
         setList(list);
     }
+
+
     useEffect(() => {
        if (userId) {
            getFullList();
@@ -75,7 +79,7 @@ const ToDoList = () => {
     const handleChange = (e: any) => {
         setNewTask(e.target.value)
     }
-
+    console.log(users);
     return (
         <div>
             {showModal && (
