@@ -12,7 +12,6 @@ export interface IAllUserInfo extends IUser {
 
 export enum ListActionTypes {
     ADD_USER = 'ADD_USER',
-    RESTORE_FROM_STORAGE = 'RESTORE_FROM_STORAGE'
 }
 
 export interface IUserState {

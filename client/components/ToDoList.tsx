@@ -6,6 +6,8 @@ import {completeItem, createItem, deleteItem, getList, updateItem} from "@/http/
 import {IList} from "@/types/list";
 import Input from "@/components/Input";
 import FriendsList from "@/components/FriendsList";
+import {useSelector} from "react-redux";
+import {IUserState} from "@/types/user";
 
 
 const ToDoList = () => {
@@ -13,15 +15,17 @@ const ToDoList = () => {
     const [showModal, setShowModal] = useState(false);
     const [currentTask, setCurrentTask] = useState<IList | null>(null);
     const [newTask, setNewTask] = useState("");
-    // const userId= useSelector((state: IUserState) => state.userId);
-    const userId = localStorage.getItem('userId') as string;
+    const userId= useSelector((state: IUserState) => state.userId);
     const [openFriendsView, setOpenFriendsView] = useState(false);
+
     const getFullList = async () => {
         const list = await getList(userId);
         setList(list);
     }
     useEffect(() => {
-        getFullList();
+       if (userId) {
+           getFullList();
+       }
     }, [])
 
 
