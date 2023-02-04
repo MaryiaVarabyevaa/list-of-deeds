@@ -13,8 +13,18 @@ export class ListController {
         return this.listService.create(listDto);
     }
 
-    @Post('findOne')
-    async login(@Request() req): Promise<List[]> | null{
+    @Post('find')
+    async find(@Request() req): Promise<List[]> | null{
         return this.listService.findList(req.body.userId);
+    }
+
+    @Post('delete')
+    async delete(@Request() req): Promise<List> {
+        return this.listService.delete(req.body.id);
+    }
+
+    @Post('update')
+    async update(@Request() req): Promise<List> {
+        return this.listService.update(req.body.id, req.body.list, req.body.isCompleted);
     }
 }

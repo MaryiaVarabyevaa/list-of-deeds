@@ -1,6 +1,6 @@
 import {IsBoolean, IsNotEmpty, IsString} from "class-validator";
 
-export class CreateListDto {
+export class UpdateListDto {
     @IsNotEmpty({
         message: 'UserIs is a required field'
     })
