@@ -7,7 +7,6 @@ import Alert from "@/components/Alert";
 import Input from "@/components/Input";
 import {useDispatch} from "react-redux";
 import {addUserAction} from "@/store/userStore";
-import Link from "next/link";
 import {useRouter} from "next/router";
 
 const AuthForm = () => {
@@ -60,10 +59,6 @@ const AuthForm = () => {
                         render={({
                                      field: {onChange, value}
                                  }) => (
-                            // <input
-                            //     onChange={onChange}
-                            //     value={value}
-                            // />
                             <Input value={value} onChange={onChange} placeholder={'Enter your nickname'} margin={2}/>
                         )}
                     />
@@ -79,11 +74,6 @@ const AuthForm = () => {
                     render={({
                                  field: {onChange, value}
                              }) => (
-                        // <input
-                        //     type='email'
-                        //     onChange={onChange}
-                        //     value={value}
-                        // />
                         <Input value={value} onChange={onChange} placeholder={'Enter your email'} margin={2}/>
                     )}
                 />
@@ -99,11 +89,6 @@ const AuthForm = () => {
                     render={({
                                  field: {onChange, value}
                              }) => (
-                        // <input
-                        //     type="password"
-                        //     onChange={onChange}
-                        //     value={value}
-                        // />
                         <Input
                             value={value}
                             onChange={onChange}

@@ -10,6 +10,8 @@ const initialState: IUserState = {
 export const userReducer = (state = initialState, action: IAction): IUserState => {
     switch (action.type) {
         case ListActionTypes.ADD_USER:
+            localStorage.setItem('userId', action.payload.userId);
+            localStorage.setItem('isNewUser', action.payload.isNewUser);
             return {
                 ...state,
                 userId: action.payload.userId,

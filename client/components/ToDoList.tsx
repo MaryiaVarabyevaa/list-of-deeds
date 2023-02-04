@@ -5,18 +5,20 @@ import empty from "../assets/empty.jpg";
 import {completeItem, createItem, deleteItem, getList, updateItem} from "@/http/listAPI";
 import {IList} from "@/types/list";
 import Input from "@/components/Input";
+import {useSelector} from "react-redux";
+import {IUserState} from "@/types/user";
+
 
 
 const ToDoList = () => {
-    const [userId, setUserId] = useState('63de13dee71302469a79b225');
     const [list, setList] = useState<IList[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [currentTask, setCurrentTask] = useState<IList | null>(null);
     const [newTask, setNewTask] = useState("");
-    const [sortCriteria, setSortCriteria] = useState('All');
+    const userId= useSelector((state: IUserState) => state.userId);
 
     const getFullList = async () => {
-        const list = await getList('63de13dee71302469a79b225');
+        const list = await getList(userId);
         setList(list);
     }
     useEffect(() => {
@@ -50,25 +52,11 @@ const ToDoList = () => {
         }
     };
 
-
-
     const handleDeleteToDo = async (id: string) => {
         const updatedToDoList = list.filter((todo) => todo._id != id);
         const deletedItem = await deleteItem(id);
         setList(updatedToDoList)
     };
-
-    const handleSort = (sortCriteria: string) => {
-        setSortCriteria(sortCriteria);
-    }
-
-
-    const sortToDoList = list.filter((todo) => {
-        if (sortCriteria === "All") return true;
-        if (sortCriteria === "Completed" && todo.isCompleted) return true;
-        if (sortCriteria === "Not Completed" && !todo.isCompleted) return true;
-        return false;
-    });
 
     const handleToggleCompleted = async (id: string) => {
         let item = list.find((item) => item._id == id );
@@ -90,14 +78,6 @@ const ToDoList = () => {
             {showModal && (
                 <div className="fixed w-full left-0 top-0 h-full bg-transparentBlack flex items-center justify-center">
                     <div className="bg-white p-8 rounded-md">
-                        {/*<input*/}
-                        {/*    className="border p-2 rounded-md outline-none mb-8"*/}
-                        {/*    value={newTask}*/}
-                        {/*    onChange={(e) => setNewTask(e.target.value)}*/}
-                        {/*    placeholder={*/}
-                        {/*        currentTask ? "Update your task here" : "Enter your task here"*/}
-                        {/*    }*/}
-                        {/*/>*/}
                         <Input
                             value={newTask}
                             onChange={handleChange}
@@ -159,24 +139,8 @@ const ToDoList = () => {
                     </div>
                 ) : (
                     <div className="container mx-auto mt-6">
-                        <div className="flex justify-center mb-6">
-                            <select
-                                onChange={(e) => handleSort(e.target.value)}
-                                className="p-1 outline-none text-sm"
-                            >
-                                <option value="All" className="text-sm">
-                                    All
-                                </option>
-                                <option value="Completed" className="text-sm">
-                                    Completed
-                                </option>
-                                <option value="Not Completed" className="text-sm">
-                                    Not Completed
-                                </option>
-                            </select>
-                        </div>
                         <div>
-                            {sortToDoList.map((todo) => (
+                            {list.map((todo) => (
                                 <div
                                     key={todo._id}
                                     className="flex items-center justify-between mb-6 bg-Tangaroa mx-auto w-full md:w-[75%] rounded-md p-4"
@@ -230,5 +194,3 @@ const ToDoList = () => {
 }
 
 export default ToDoList;
-
-// localStorage.clear()
