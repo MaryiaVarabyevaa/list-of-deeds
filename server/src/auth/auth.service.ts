@@ -51,6 +51,7 @@ export class AuthService {
     async registration(userDto: CreateUserDto) {
         const { nickname, email, password } = userDto;
         const checkedUser = await this.userService.checkUserInSystem(nickname, email);
+
         if (checkedUser) {
             let comparedPassword = bcrypt.compareSync(password, checkedUser.password);
             if (comparedPassword) {
@@ -61,12 +62,26 @@ export class AuthService {
                 return token;
             }
         }
+
         const user = await this.userService.findUser(email);
+
         if (user) {
             throw new HttpException(
                 {
                     status: HttpStatus.UNAUTHORIZED,
                     error: 'User with such email already exists',
+                },
+                HttpStatus.UNAUTHORIZED,
+            );
+        }
+
+        const checkedNickname = await this.userService.checkByNickname([nickname]);
+
+        if (checkedNickname) {
+            throw new HttpException(
+                {
+                    status: HttpStatus.UNAUTHORIZED,
+                    error: 'User with such nickname already exists',
                 },
                 HttpStatus.UNAUTHORIZED,
             );

@@ -1,10 +1,9 @@
 import {useSelector} from "react-redux";
 import {IAllUserInfo, IUserState} from "@/types/user";
-import {checkUserByNickname, getAllUsers} from "@/http/userAPI";
+import {checkUserByNickname} from "@/http/userAPI";
 import {useEffect, useState} from "react";
 import {addFriend, getFriends, getNotFriends} from "@/http/friendsAPI";
 import {getList} from "@/http/listAPI";
-import {IList} from "@/types/list";
 import Modal from "@/components/Modal";
 import Alert from "@/components/Alert";
 import {IFriend} from "@/types/friends";
@@ -12,17 +11,18 @@ import {IFriend} from "@/types/friends";
 
 const FriendsList = () => {
     const [users, setUsers] = useState<any>([]);
-    const [friends, setFriends] = useState<any>([]);
-    const [userList, setUserList] = useState<IList[]>([]);
-    const [showModal, setShowModal] = useState(false);
-    const [value, setValue] = useState('');
-    const [isChanged, setIsChanged] = useState(false);
-    const [nickname, setNickname] = useState('')
-    const [isError, setIsError] = useState('');
-    const userId= useSelector((state: IUserState) => state.userId);
+    const [friends, setFriends] = useState<any[]>([]);
+    const [userList, setUserList] = useState<any[]>([]);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [value, setValue] = useState<string>('');
+    const [isChanged, setIsChanged] = useState<boolean>(false);
+    const [nickname, setNickname] = useState<string>('')
+    const [isError, setIsError] = useState<string>('');
+    const userId = useSelector((state: IUserState) => state.userId);
 
     const getAllFriends = async () => {
         let friends = await getFriends(userId);
+        // @ts-ignore
         setFriends(friends);
     }
 
@@ -76,7 +76,7 @@ const FriendsList = () => {
                             {
                                 isError.length !== 0 && <Alert errorText={isError}/>
                             }
-                            <div className="flex items-center bg-gray-200 rounded-md">
+                            <div className="flex items-center bg-gray-200 mt-5 rounded-md">
                                 <div className="pl-2">
                                     <button onClick={handleAdd} disabled={users.length === 0? true : false}>
                                         +

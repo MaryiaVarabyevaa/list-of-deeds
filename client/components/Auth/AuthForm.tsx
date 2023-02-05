@@ -9,11 +9,11 @@ import {emailValidation, nicknameValidation, passwordValidation} from "@/compone
 import Alert from "@/components/Alert";
 
 const AuthForm = () => {
-    const [isAuth, setIsAuth] = useState(false);
-    const [errorText, setErrorText] = useState('');
+    const [isAuth, setIsAuth] = useState<boolean>(false);
+    const [errorText, setErrorText] = useState<string>('');
     const dispatch = useDispatch();
     const router = useRouter()
-    const { handleSubmit, control, reset, register, formState: { errors } } = useForm<IUser>({
+    const { handleSubmit, control, formState: { errors } } = useForm<IUser>({
         mode: 'onChange',
         defaultValues: {
             nickname: '',

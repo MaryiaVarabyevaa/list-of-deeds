@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    restart: always
+    volumes:
+      - ./db-data/:/data/db
+    ports:
+      - 28017:27017
+  server:
+    container_name: todo-server
+    restart: always
+    build:
+      context: ./server
+    env_file:
+      - ./server/.env
+    volumes:
+      - ./server:/usr/src/app
+      - /app/node_modules
+    ports:
+      - 5000:5000
+    command: npm start
+    depends_on:
+      - mongodb
+  client:
+    container_name: todo-client
+    restart: always
+    build:
+      context: ./client
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client/src:/code/src
+      - /code/node_modules
+    depends_on:
+      - server
+volumes:
+  db-data:

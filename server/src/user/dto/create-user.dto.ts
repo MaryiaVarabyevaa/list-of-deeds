@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsString} from 'class-validator';
+import {IsEmail, IsNotEmpty, IsString, Matches} from 'class-validator';
 
 export class CreateUserDto {
     @IsNotEmpty({
@@ -6,6 +6,9 @@ export class CreateUserDto {
     })
     @IsString({
         message: 'Nickname must be a string'
+    })
+    @Matches(/^[a-zA-Z0-9._-]+$/, {
+        message: 'Nickname field contains not correct value'
     })
     readonly nickname: string;
 
@@ -15,6 +18,9 @@ export class CreateUserDto {
     @IsString({
         message: 'Email must be a string'
     })
+    @IsEmail({}, {
+        message: 'Incorrect email'
+    })
     readonly email: string;
 
     @IsNotEmpty({
@@ -22,6 +28,9 @@ export class CreateUserDto {
     })
     @IsString({
         message: 'Password must be a string'
+    })
+    @Matches(/^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]{7,}$/, {
+        message: 'Password can contain latin alphabet and numbers'
     })
     readonly password: string;
 }

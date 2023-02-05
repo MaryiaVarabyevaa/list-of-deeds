@@ -1,10 +1,9 @@
-import {Model, Types} from "mongoose";
-import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
+import {Model} from "mongoose";
+import {Injectable} from '@nestjs/common';
 import {InjectModel} from "@nestjs/mongoose";
 import {User, UserDocument} from "./schemas/user.schema";
 import {CreateUserDto} from "./dto/create-user.dto";
 import {IUser} from "./types/user";
-import {FriendsService} from "../friends/friends.service";
 
 @Injectable()
 export class UserService {
@@ -32,12 +31,12 @@ export class UserService {
         return user;
     }
 
-    async checkByNickname(nickname: string[]): Promise<IUser> {
+    async checkByNickname(nickname: string[]): Promise<IUser | null> {
         const user = await this.userModel.findOne({nickname},{_id: 1, nickname: 1});
         return user;
     }
 
-    async checkUserInSystem(nickname: string, email: string) {
+    async checkUserInSystem(nickname: string, email: string): Promise<IUser |  null> {
         const user = await this.userModel.findOne({nickname, email}, {__v: 0});
         // @ts-ignore
         return user? user._doc : null;
@@ -47,7 +46,4 @@ export class UserService {
         return this.userModel.find().exec();
     }
 
-    async getSortedUsers(_id: string) {
-
-    }
 }

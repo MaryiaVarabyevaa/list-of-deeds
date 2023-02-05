@@ -1,7 +1,5 @@
-import {Dispatch, SetStateAction, useState} from "react";
+import {Dispatch, SetStateAction} from "react";
 import {IList} from "@/types/list";
-import {TiPencil} from "react-icons/ti";
-import {BsTrash} from "react-icons/bs";
 import Alert from "@/components/Alert";
 
 interface IModal {

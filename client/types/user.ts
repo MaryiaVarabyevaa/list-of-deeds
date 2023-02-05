@@ -1,5 +1,3 @@
-import {ITodoList} from "@/types/list";
-
 export interface IUser {
     nickname: string;
     email: string;
