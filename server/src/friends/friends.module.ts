@@ -1,8 +1,9 @@
-import {Module} from '@nestjs/common';
+import {forwardRef, Module} from '@nestjs/common';
 import {FriendsService} from './friends.service';
 import {FriendsController} from './friends.controller';
 import {MongooseModule} from "@nestjs/mongoose";
 import {Friends, FriendsSchema} from "./schemas/friends.schema";
+import {UserModule} from "../user/user.module";
 
 @Module({
   providers: [FriendsService],
@@ -14,6 +15,7 @@ import {Friends, FriendsSchema} from "./schemas/friends.schema";
         schema: FriendsSchema
       }
     ]),
+    forwardRef(() => UserModule),
   ]
 })
 export class FriendsModule {}

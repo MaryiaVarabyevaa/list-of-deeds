@@ -4,6 +4,7 @@ import { UserService } from './user.service';
 import {MongooseModule} from "@nestjs/mongoose";
 import {User, UserSchema} from "./schemas/user.schema";
 import {AuthModule} from "../auth/auth.module";
+import {FriendsModule} from "../friends/friends.module";
 
 @Module({
   controllers: [UserController],
@@ -15,7 +16,8 @@ import {AuthModule} from "../auth/auth.module";
           schema: UserSchema
         }
       ]),
-      forwardRef(() => AuthModule)
+      forwardRef(() => AuthModule),
+      forwardRef(() => FriendsModule),
   ],
   exports: [UserService],
 })

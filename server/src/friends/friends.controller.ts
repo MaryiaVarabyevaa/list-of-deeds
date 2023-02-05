@@ -2,7 +2,7 @@ import {Body, Controller, Post, Request} from '@nestjs/common';
 import {FriendsService} from "./friends.service";
 import {CreateFriendsDto} from "./dto/create-friends.dto";
 import {Friends} from "./schemas/friends.schema";
-import {List} from "../list/schemas/list.schema";
+import {IUser} from "../user/types/user";
 
 @Controller('friends')
 export class FriendsController {
@@ -14,8 +14,13 @@ export class FriendsController {
     }
 
     @Post('find')
-    find(@Request() req): Promise<Friends[]> | null {
+    find(@Request() req): Promise<IUser[]> | null {
         return this.friendsService.findFriends(req.body.userId);
+    }
+
+    @Post('find-other')
+    findNotFriends(@Request() req): Promise<IUser[]> | null {
+        return this.friendsService.findNotFriends(req.body.userId);
     }
 
 }

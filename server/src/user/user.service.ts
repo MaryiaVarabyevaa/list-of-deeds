@@ -1,13 +1,16 @@
 import {Model, Types} from "mongoose";
-import { Injectable } from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectModel} from "@nestjs/mongoose";
 import {User, UserDocument} from "./schemas/user.schema";
 import {CreateUserDto} from "./dto/create-user.dto";
 import {IUser} from "./types/user";
+import {FriendsService} from "../friends/friends.service";
 
 @Injectable()
 export class UserService {
-    constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+    constructor(
+        @InjectModel(User.name) private userModel: Model<UserDocument>,
+    ) {}
 
     async create(userDto: CreateUserDto): Promise<IUser> {
         const newUser = new this.userModel(userDto);
@@ -19,14 +22,32 @@ export class UserService {
         return user;
     }
 
+    async findById(_id: string[]): Promise<IUser[]> {
+        const user = await this.userModel.find({_id},{_id: 1, nickname: 1});
+        return user;
+    }
+
+    async findNotFriends(_id: string[]): Promise<IUser[]> {
+        const user = await this.userModel.find({_id: {$nin : _id}}, {_id: 1, nickname: 1});
+        return user;
+    }
+
+    async checkByNickname(nickname: string[]): Promise<IUser> {
+        const user = await this.userModel.findOne({nickname},{_id: 1, nickname: 1});
+        return user;
+    }
+
     async checkUserInSystem(nickname: string, email: string) {
         const user = await this.userModel.findOne({nickname, email}, {__v: 0});
         // @ts-ignore
-        //todo: change type _id in IUser
         return user? user._doc : null;
     }
 
     async getAllUsers(): Promise<IUser[]> | null {
         return this.userModel.find().exec();
+    }
+
+    async getSortedUsers(_id: string) {
+
     }
 }

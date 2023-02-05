@@ -13,7 +13,7 @@ export class Friends {
     userId: User;
 
     @Prop({ required: true })
-    friends: string[];
+    friendId: string;
 }
 
 export const FriendsSchema = SchemaFactory.createForClass(Friends);

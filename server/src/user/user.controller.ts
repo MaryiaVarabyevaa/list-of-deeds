@@ -40,6 +40,16 @@ export class UserController {
         return this.userService.findUser(req.body.email);
     }
 
+    @Post('find-by-id')
+    async findById(@Request() req): Promise<IUser[]> {
+        return this.userService.findById(req.body.id);
+    }
+
+    @Post('check-by-nickname')
+    async checkByNickname(@Request() req): Promise<IUser> {
+        return this.userService.checkByNickname(req.body.nickname);
+    }
+
     @Get()
     getAll(): Promise<IUser[]> {
         return this.userService.getAllUsers();
