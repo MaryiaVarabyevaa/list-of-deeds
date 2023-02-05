@@ -8,6 +8,7 @@ import {useRouter} from "next/router";
 import {emailValidation, nicknameValidation, passwordValidation} from "@/components/Auth/validation";
 import Alert from "@/components/Alert";
 
+
 const AuthForm = () => {
     const [isAuth, setIsAuth] = useState<boolean>(false);
     const [errorText, setErrorText] = useState<string>('');
@@ -44,13 +45,13 @@ const AuthForm = () => {
 
     return <>
         <div className="h-screen flex justify-center">
-            <div className="flex justify-center items-center bg-white w-1/2 flex-col">
+            <div className="flex justify-center items-center bg-white mx-auto my-auto w-screen h-screen  flex-col">
                 <h1 className="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
                 <p className="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
                 {
                     errorText.length !== 0 && <Alert errorText={errorText}/>
                 }
-                <form className="bg-white w-1/2" onSubmit={handleSubmit(onSubmit)}>
+                <form className="bg-white" onSubmit={handleSubmit(onSubmit)}>
                     {
                        isAuth && <div className={`flex items-center border-2 py-2 px-3 rounded-2xl mb-4 ${errors.nickname? 'border-red-600' : ''}`} >
                             <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" stroke="currentColor">
@@ -67,7 +68,7 @@ const AuthForm = () => {
                                              field: {onChange, value}
                                          }) => (
                                     <input
-                                        className="pl-2 outline-none border-none"
+                                        className="pl-2 outline-none border-none w-full"
                                         type="text"
                                         value={value}
                                         onChange={onChange}
