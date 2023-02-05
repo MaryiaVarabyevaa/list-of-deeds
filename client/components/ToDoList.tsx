@@ -23,9 +23,9 @@ const ToDoList = () => {
 
 
     useEffect(() => {
-       if (userId) {
-           getFullList();
-       }
+        if (userId) {
+            getFullList();
+        }
     }, [])
 
 
@@ -121,7 +121,7 @@ const ToDoList = () => {
                         onClick={() => {
                             showList? setShowModal(true) :
                                 setShowList(true);
-                                setOpenFriendsView(false);
+                            setOpenFriendsView(false);
                         }}
                     >
                         {
@@ -141,7 +141,15 @@ const ToDoList = () => {
                     </button>
                 </div>
                 {
-                    showList && list.length === 0? <h1>Тут еще нет никаких добрых дел :(</h1> : <div className="flex justify-center items-center bg-white w-1/3 gap-3 flex-col  py-10">
+                    showList && (list.length === 0? <>
+                        <h1 className="text-gray-800 font-bold text-2xl mb-1 mt-7 ">There are no good deeds here yet</h1>
+                        <p className="text-sm font-normal text-gray-600 mb-1">So add something...</p>
+                        <svg viewBox="0 0 256 256" className="h-12 w-12 text-gray-400"  xmlns="http://www.w3.org/2000/svg">
+                            <rect fill="none" height="256" width="256"/>
+                            <circle cx="128" cy="128" fill="none" r="96" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="12"/>
+                            <circle cx="92" cy="108" r="10"/><circle cx="164" cy="108" r="10"/><path d="M169.6,176a48.1,48.1,0,0,0-83.2,0" fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="12"/>
+                        </svg>
+                    </> : <div className="flex justify-center items-center bg-white w-1/3 gap-3 flex-col  py-10">
                         {list.map((todo) => (
                             <div
                                 key={todo._id}
@@ -180,7 +188,7 @@ const ToDoList = () => {
                             </div>
                         ))
                         }
-                    </div>
+                    </div>)
                 }
                 {
                     openFriendsView && <FriendsList />
