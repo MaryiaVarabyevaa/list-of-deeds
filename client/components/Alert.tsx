@@ -1,6 +1,6 @@
 const Alert = ({errorText}: {errorText: string}) => {
     return (
-        <div className="flex bg-red-100 rounded-lg p-4 mb-4 text-sm text-red-700" role="alert">
+        <div className="flex bg-red-100 rounded-lg p-4 text-sm text-red-700" role="alert">
             <svg className="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20"
                  xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
@@ -8,7 +8,7 @@ const Alert = ({errorText}: {errorText: string}) => {
                       clip-rule="evenodd"></path>
             </svg>
             <div>
-                <span className="font-medium">Danger alert!</span> {errorText}
+               {errorText}
             </div>
         </div>
     )

@@ -3,10 +3,13 @@ import Heading from "@/components/Heding";
 
 const Main = () => {
     return (
-        <div className="App font-Poppins container py-16 px-6 min-h-screen mx-auto">
-            <Heading />
+        <>
             <ToDoList />
-        </div>
+        </>
+        // <div className="App font-Poppins container py-16 px-6 min-h-screen mx-auto">
+        //     <Heading />
+        //
+        // </div>
     )
 }
 
