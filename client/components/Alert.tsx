@@ -2,7 +2,7 @@
 
 const Alert = ({errorText}: {errorText: string}) => {
     return (
-        <div className="flex bg-red-100 rounded-lg p-4  mb-7 text-sm text-red-700" role="alert">
+        <div className="flex bg-red-100 rounded-lg p-4 mt-7 mb-7 text-sm text-red-700" role="alert">
             <svg className="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20"
                  xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd"

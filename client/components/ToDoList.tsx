@@ -120,89 +120,97 @@ const ToDoList = () => {
                     </div>
                 </div>
             )}
-            <div className="h-screen items-center flex gap-3 mt-11 flex-col">
-                <h1 className="text-gray-800 font-bold text-2xl mb-1">Rather, add a good deed to your list!</h1>
-                <div className="flex justify-center items-center bg-white w-1/3 gap-3 ">
-                    <button
-                        type="submit"
-                        className="block bg-indigo-600 mt-4 py-2 w-1/2 rounded-2xl text-white font-semibold mb-2"
-                        onClick={() => {
-                            showList? setShowModal(true) :
-                                setShowList(true);
-                            setOpenFriendsView(false);
-                        }}
-                    >
-                        {
-                            showList? "Add Deed" : "Show list"
-                        }
-                    </button>
-                    <button
-                        type="submit"
-                        className="block w-full bg-indigo-600 mt-4 w-1/2 py-2 rounded-2xl text-white font-semibold mb-2"
-                        onClick={() => {
-                            setOpenFriendsView(!openFriendsView);
-                            setShowModal(false)
-                            setShowList(false);
-                        }}
-                    >
-                        Friends
-                    </button>
-                </div>
-                {
-                    showList && (list.length === 0? <>
-                        <h1 className="text-gray-800 font-bold text-2xl mb-1 mt-7 ">There are no good deeds here yet</h1>
-                        <p className="text-sm font-normal text-gray-600 mb-1">So add something...</p>
-                        <svg viewBox="0 0 256 256" className="h-12 w-12 text-gray-400"  xmlns="http://www.w3.org/2000/svg">
-                            <rect fill="none" height="256" width="256"/>
-                            <circle cx="128" cy="128" fill="none" r="96" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="12"/>
-                            <circle cx="92" cy="108" r="10"/><circle cx="164" cy="108" r="10"/><path d="M169.6,176a48.1,48.1,0,0,0-83.2,0" fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="12"/>
-                        </svg>
-                    </> : <div className="flex justify-center items-center bg-white w-1/3 gap-3 flex-col  py-10">
-                        {list.map((todo) => (
-                            <div
-                                key={todo._id}
-                                className="flex items-center justify-between bg-gray-400 mx-auto w-full rounded-2xl p-4 gap-5"
-                            >
-                                <div
-                                    className={`${
-                                        todo.isCompleted
-                                            ? "line-through text-white"
-                                            : "text-white"
-                                    }`}
-                                    onClick={() => {
-                                        handleToggleCompleted(todo._id);
-                                    }}
-                                >
-                                    {todo.list}
-                                </div>
-                                <div>
-                                    <button
-                                        className="text-white p-1 rounded-md ml-2"
-                                        onClick={() => {
-                                            setShowModal(true);
-                                            setCurrentTask(todo);
-                                            setNewTask(todo.list);
-                                        }}
-                                    >
-                                        <TiPencil />
-                                    </button>
-                                    <button
-                                        className=" text-white p-1 rounded-md ml-2"
-                                        onClick={() => handleDeleteToDo(todo._id)}
-                                    >
-                                        <BsTrash />
-                                    </button>
-                                </div>
-                            </div>
-                        ))
-                        }
-                    </div>)
-                }
-                {
-                    openFriendsView && <FriendsList />
-                }
-            </div>
-
+           <div className="App font-Poppins container py-16 px-6 min-h-screen mx-auto">
+               <div className=" flex items-center justify-center flex-col">
+                   <h1 className="text-gray-800 font-bold text-2xl mb-7">Start adding to your list of good deeds as soon as possible</h1>
+                  <div className="flex gap-5">
+                      <button
+                          type="submit"
+                          className="bg-indigo-600 text-center text-white py-3 px-10 rounded-md"
+                          onClick={() => {
+                              showList? setShowModal(true) :
+                                  setShowList(true);
+                              setOpenFriendsView(false);
+                          }}
+                      >
+                          {
+                              showList? "Add Deed" : "Show list"
+                          }
+                      </button>
+                      <button
+                          type="submit"
+                          className="bg-indigo-600 text-center text-white py-3 px-10 rounded-md"
+                          onClick={() => {
+                              setOpenFriendsView(!openFriendsView);
+                              setShowModal(false)
+                              setShowList(false);
+                          }}
+                      >
+                          Friends
+                      </button>
+                  </div>
+                   <div className="container mx-auto mt-6">
+                       {
+                           showList && (list.length === 0? <div className="flex flex-col items-center justify-between">
+                               <h1 className="text-gray-800 font-bold text-2xl mb-1 mt-7 ">There are no good deeds here yet</h1>
+                               <p className="text-sm font-normal text-gray-600 mb-1">So add something...</p>
+                               <svg viewBox="0 0 256 256" className="h-12 w-12 text-gray-400"  xmlns="http://www.w3.org/2000/svg">
+                                   <rect fill="none" height="256" width="256"/>
+                                   <circle cx="128" cy="128" fill="none" r="96" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="12"/>
+                                   <circle cx="92" cy="108" r="10"/><circle cx="164" cy="108" r="10"/><path d="M169.6,176a48.1,48.1,0,0,0-83.2,0" fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="12"/>
+                               </svg>
+                           </div> : <>
+                               <div className="container mx-auto mt-6">
+                                   <div>
+                                       {
+                                           list.map((item) => {
+                                               return  <div
+                                                   className="flex items-center justify-between mb-6 bg-gray-400 mx-auto w-full md:w-[75%] rounded-md p-4"
+                                                   key={item._id}
+                                               >
+                                                   <div
+                                                       className={`${
+                                                           item.isCompleted
+                                                               ? "line-through text-white"
+                                                               : "text-white"
+                                                       }`}
+                                                       onClick={() => {
+                                                           handleToggleCompleted(item._id);
+                                                       }}
+                                                   >
+                                                       { item.list }
+                                                   </div>
+                                                   <div>
+                                                       <button
+                                                           className="text-white p-1 rounded-md ml-2"
+                                                           onClick={() => {
+                                                               setShowModal(true);
+                                                               setCurrentTask(item);
+                                                               setNewTask(item.list);
+                                                           }}
+                                                       >
+                                                           <TiPencil />
+                                                       </button>
+                                                       <button
+                                                           className="text-white p-1 rounded-md ml-2"
+                                                           onClick={() => handleDeleteToDo(item._id)}
+                                                       >
+                                                           <BsTrash />
+                                                       </button>
+                                                   </div>
+                                               </div>
+                                           })
+                                       }
+                                   </div>
+                               </div>
+                           </>)
+                       }
+                   </div>
+               </div>
+               {
+                   openFriendsView && <FriendsList />
+               }
+           </div>
         </>
     )
 }
