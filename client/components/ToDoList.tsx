@@ -76,6 +76,8 @@ const ToDoList = () => {
         setNewTask(e.target.value)
     }
 
+    console.log(currentTask)
+
     return (
         <>
             {showModal && (
@@ -86,13 +88,15 @@ const ToDoList = () => {
                             type="text"
                             value={newTask}
                             onChange={handleChange}
-                            placeholder={currentTask ? "Update your task here" : "Enter your task here"}
+                            placeholder={"Enter your task here"}
                         />
                         <div className="flex justify-between gap-3">
                             <>
                                 <button
                                     onClick={() => {
                                         setShowModal(false);
+                                        setNewTask('');
+                                        setCurrentTask(null);
                                         currentTask? handleUpdateToDoList(currentTask._id, newTask) : handleAddTodo(newTask)
                                     }}
                                     className="bg-indigo-600 text-white py-3 px-10  rounded-2xl"
@@ -103,7 +107,11 @@ const ToDoList = () => {
                                 </button>
                                 <button
                                     className="bg-Tangaroa rounded-2xl text-white py-3 px-10"
-                                    onClick={() => setShowModal(false)}
+                                    onClick={() => {
+                                        setShowModal(false);
+                                        setNewTask('');
+                                        setCurrentTask(null)
+                                    }}
                                 >
                                     Cancel
                                 </button>
