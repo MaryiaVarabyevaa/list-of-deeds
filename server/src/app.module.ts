@@ -7,7 +7,7 @@ import { FriendsModule } from './friends/friends.module';
 
 @Module({
   imports: [
-      MongooseModule.forRoot(`mongodb://mongodb:27017/deedsList`),
+      MongooseModule.forRoot('mongodb+srv://userdb:2xNkI1fTQ82WZRFA@cluster0.25bayjt.mongodb.net/?retryWrites=true&w=majority'),
       UserModule,
       AuthModule,
       ListModule,
