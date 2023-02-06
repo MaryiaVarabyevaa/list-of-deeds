@@ -4,7 +4,7 @@
 
 **Deployment Link:** https://client-ebon-ten.vercel.app/
 
-*Due to the fact that the client, server and database are on different services, requests are not processed as fast as we would like*
+*Due to the fact that the client, server and database are on different services, requests are not processed as fast as I would like :(*
 
 ## Description:
 
