@@ -4,10 +4,12 @@
 
 **Deployment Link:** https://client-ebon-ten.vercel.app/
 
+*Due to the fact that the client, server and database are on different services, requests are not processed as fast as we would like*
+
 ## Description:
 
 Within the framework of this project, an application for keeping to-do lists (good deeds) was implemented. Immediately the user gets to the registration / login page.
-After confirming his identity, he gets to the main page, where he can add, delete and edit his cases, and he can also mark them as completed.
+After confirming his identity, he gets to the main page, where he can add, delete and edit his cases, and he can also mark them as completed (when clicking on them).
 
 The user also has access to functions for interacting with other registered users, namely:
 
@@ -27,7 +29,7 @@ To validate the data on the server side, ValidationPipe was used, which are buil
 ## Описание:
 
 В рамках этого проекта было реализовано приложение для ведения списков дел (добрых дел). Сразу пользователь попадает на страницу регистрации/входа в систему. 
-После подтверждения личности он попадает на главную страницу, где может добавлять, удалять и редактировать свои дела, также он может помечать их как выполненные.
+После подтверждения личности он попадает на главную страницу, где может добавлять, удалять и редактировать свои дела, также он может помечать их как выполненные (при клике на них).
 
 Также пользователю доступны функции по взаимодействию с другими зарегистрированными пользователями, а именно: 
 
