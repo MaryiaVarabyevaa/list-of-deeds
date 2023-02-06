@@ -2,6 +2,8 @@
 
 **Technology stack:** TypeScript, NestJS, MongoDB, Docker, React, NextJS, Redux, Tailwind.
 
+**Deployment Link:** https://client-ebon-ten.vercel.app/
+
 ## Description:
 
 Within the framework of this project, an application for keeping to-do lists (good deeds) was implemented. Immediately the user gets to the registration / login page.
