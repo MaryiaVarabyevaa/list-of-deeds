@@ -6,6 +6,8 @@
 
 *Due to the fact that the client, server and database are on different services, requests are not processed as fast as I would like :(*
 
+There are already several users in the system, they can be added as friends to test the application, their nicknames are masha, lena, user, anonymous, m_vorobyovaa. Or you can add your users.
+
 ## Description:
 
 Within the framework of this project, an application for keeping to-do lists (good deeds) was implemented. Immediately the user gets to the registration / login page.
