@@ -15,12 +15,12 @@ The user also has access to functions for interacting with other registered user
 
 ## Experience gained:
 
-Было реализовано клиент-серверное приложение по ведению списков дел, написанное на TypeScript. Также в рамках проекта были собраны docker-контейнеры и реализован деплой.
+A client-server application for keeping to-do lists written in TypeScript was implemented. Docker containers were also assembled and a deployment was implemented as part of the project.
 
-В первый раз поработала с NextJS, MongoDB и Tailwind.
+For the first time I worked with Next JS, MongoDB and Tailwind.
 
-При реализации аутентификации и авторизации было добавлено middleware Passport.js, для передачи данных использовался JWT.
-Для валидации данных на стороне сервера были использованы ValidationPipe, которые встроенны в NestJS. Взаимодействие серверной части с БД осуществляется с помощью ORM Mongoose.
+When implementing authentication and authorization, middleware Passport was added.js, JWT was used for data transmission.
+To validate the data on the server side, ValidationPipe was used, which are built into NestJS. The interaction of the server part with the database is carried out using ORM Mongoose.
 
 ## Описание:
 
@@ -41,4 +41,10 @@ The user also has access to functions for interacting with other registered user
 
 При реализации аутентификации и авторизации было добавлено middleware Passport.js, для передачи данных использовался JWT.
 Для валидации данных на стороне сервера были использованы ValidationPipe, которые встроенны в NestJS. Взаимодействие серверной части с БД осуществляется с помощью ORM Mongoose.
+
+![img.png](screenshots/img.png)
+![img.png](screenshots/img1.png)
+![img.png](screenshots/img2.png)
+![img.png](screenshots/img4.png)
+![img.png](screenshots/img5.png)
 
