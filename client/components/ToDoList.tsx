@@ -76,8 +76,6 @@ const ToDoList = () => {
         setNewTask(e.target.value)
     }
 
-    console.log(currentTask)
-
     return (
         <>
             {showModal && (
@@ -122,7 +120,7 @@ const ToDoList = () => {
             )}
            <div className="App font-Poppins container py-16 px-6 min-h-screen mx-auto">
                <div className=" flex items-center justify-center flex-col">
-                   <h1 className="text-gray-800 font-bold text-2xl mb-7">Start adding to your list of good deeds as soon as possible</h1>
+                   <h1 className="text-gray-800 font-bold text-2xl mb-7 text-center">Start adding to your list of good deeds as soon as possible</h1>
                   <div className="flex gap-5">
                       <button
                           type="submit"
@@ -152,7 +150,7 @@ const ToDoList = () => {
                    <div className="container mx-auto mt-6">
                        {
                            showList && (list.length === 0? <div className="flex flex-col items-center justify-between">
-                               <h1 className="text-gray-800 font-bold text-2xl mb-1 mt-7 ">There are no good deeds here yet</h1>
+                               <h1 className="text-gray-800 font-bold text-2xl mb-1 mt-7 text-center">There are no good deeds here yet</h1>
                                <p className="text-sm font-normal text-gray-600 mb-1">So add something...</p>
                                <svg viewBox="0 0 256 256" className="h-12 w-12 text-gray-400"  xmlns="http://www.w3.org/2000/svg">
                                    <rect fill="none" height="256" width="256"/>

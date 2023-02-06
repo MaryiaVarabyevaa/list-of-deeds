@@ -43,6 +43,7 @@ const AuthForm = () => {
         }
     }
 
+    console.log(errorText.length)
     return <>
         <div className="h-screen flex justify-center">
             <div className="flex justify-center items-center bg-white mx-auto my-auto w-screen h-screen  flex-col">

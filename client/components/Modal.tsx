@@ -26,7 +26,7 @@ const Modal = ({setShowModal, list, nickname}: IModal) => {
                                     const {_id, list, isCompleted} = item;
                                     return <div
                                         key={_id}
-                                        className="flex items-center justify-between bg-gray-400 mx-auto w-full rounded-2xl p-4"
+                                        className="flex items-center justify-between bg-gray-400 mx-auto w-full rounded-2xl p-4 mb-2"
                                     >
 
                                         <div
