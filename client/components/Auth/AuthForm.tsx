@@ -43,12 +43,19 @@ const AuthForm = () => {
         }
     }
 
-    console.log(errorText.length)
     return <>
         <div className="h-screen flex justify-center">
             <div className="flex justify-center items-center bg-white mx-auto my-auto w-screen h-screen  flex-col">
-                <h1 className="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
-                <p className="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
+                <h1 className="text-gray-800 font-bold text-2xl mb-1">
+                    {
+                        isAuth? "Sign up" : "Hello Again!"
+                    }
+                </h1>
+                  <p className="text-sm font-normal text-gray-600 mb-7">
+                      {
+                          isAuth? "Welcome" : "Welcome Back"
+                      }
+                  </p>
                 {
                     errorText.length !== 0 && <Alert errorText={errorText}/>
                 }
